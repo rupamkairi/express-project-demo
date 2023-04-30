@@ -42,14 +42,21 @@ commentsController.get("/:id", authValidator, async (req: Request, res) => {
 
 commentsController.delete("/:id", authValidator, async (req: Request, res) => {
   try {
-    const deleted = await Comments.findByIdAndDelete(req.params.id);
-    const post = await Posts.findOneAndUpdate(
-      { comments: req.params.id },
-      { $pull: { comments: req.params.id } },
-      { new: true }
-    );
+    const deleted = await Comments.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user?._id,
+    });
 
-    res.status(200).json(deleted);
+    if (!deleted) res.status(403).json(null);
+    else {
+      const post = await Posts.findOneAndUpdate(
+        { comments: req.params.id },
+        { $pull: { comments: req.params.id } },
+        { new: true }
+      );
+
+      res.status(200).json(deleted);
+    }
   } catch (error) {
     res.status(400).json(null);
   }

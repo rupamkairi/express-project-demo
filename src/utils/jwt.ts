@@ -23,8 +23,6 @@ export async function generateToken(
         break;
     }
 
-    console.log(expIn);
-
     return sign(data, jwtSecret, { expiresIn: expIn });
   } catch (error) {
     throw error;

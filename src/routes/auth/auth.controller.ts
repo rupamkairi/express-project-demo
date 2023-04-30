@@ -12,7 +12,10 @@ authController.post("/signup", async (req, res) => {
     let data = req.body;
     data.password = await generateHash(data.password);
     const created = await Users.create(data);
-    const jwtoken = await generateToken({ _id: created._id });
+    const jwtoken = await generateToken({
+      _id: created._id,
+      role: created.role,
+    });
 
     res.cookie("access_token", jwtoken);
     res.status(200).json({ token: jwtoken, user: created });
@@ -32,7 +35,10 @@ authController.post("/signin", async (req, res) => {
 
       if (!match) res.status(403).json(null);
       else {
-        const jwtoken = await generateToken({ _id: found?._id });
+        const jwtoken = await generateToken({
+          _id: found?._id,
+          role: found.role,
+        });
 
         res.cookie("access_token", jwtoken);
         res.status(200).json({ token: jwtoken, user: found });
@@ -76,7 +82,10 @@ authController.post("/reset", resetValidator, async (req: Request, res) => {
 
     if (!updated) res.status(404).json(null);
     else {
-      const jwtoken = await generateToken({ _id: updated?._id });
+      const jwtoken = await generateToken({
+        _id: updated?._id,
+        role: updated.role,
+      });
 
       res.clearCookie("reset_token");
       res.cookie("access_token", jwtoken);

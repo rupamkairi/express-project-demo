@@ -2,6 +2,10 @@ import { Router } from "express";
 import { Request } from "../../types";
 import Posts from "../../models/posts";
 import authValidator from "../../middlewares/authValidator";
+import { Types } from "mongoose";
+import roleValidator from "../../middlewares/roleValidator";
+
+const { ObjectId } = Types;
 
 const postsController = Router();
 
@@ -17,17 +21,22 @@ postsController.get("", authValidator, async (req: Request, res) => {
   }
 });
 
-postsController.post("", authValidator, async (req: Request, res) => {
-  try {
-    let data = req.body;
-    data.user = req.user?._id;
-    const created = await Posts.create(data);
+postsController.post(
+  "",
+  authValidator,
+  roleValidator,
+  async (req: Request, res) => {
+    try {
+      let data = req.body;
+      data.user = req.user?._id;
+      const created = await Posts.create(data);
 
-    res.status(200).json(created);
-  } catch (error) {
-    res.status(400).json(null);
+      res.status(200).json(created);
+    } catch (error) {
+      res.status(400).json(null);
+    }
   }
-});
+);
 
 postsController.get("/:id", authValidator, async (req: Request, res) => {
   try {
@@ -42,33 +51,55 @@ postsController.get("/:id", authValidator, async (req: Request, res) => {
   }
 });
 
-postsController.put("/:id", authValidator, async (req: Request, res) => {
-  try {
-    const data = req.body;
-    const found = await Posts.findByIdAndUpdate(
-      req.params.id,
-      { data },
-      { new: true }
-    ).populate({
-      path: "user",
-      select: "name",
-    });
+postsController.put(
+  "/:id",
+  authValidator,
+  roleValidator,
+  async (req: Request, res) => {
+    try {
+      let data = req.body;
+      const found = await Posts.findOneAndUpdate(
+        {
+          _id: req.params.id,
+          user: req.user?._id,
+        },
+        data,
+        { new: true }
+      ).populate({
+        path: "user",
+        select: "name",
+      });
 
-    res.status(200).json(found);
-  } catch (error) {
-    res.status(400).json(null);
+      if (!found) res.status(403).json(null);
+      else {
+        res.status(200).json(found);
+      }
+    } catch (error) {
+      res.status(400).json(null);
+    }
   }
-});
+);
 
-postsController.delete("/:id", authValidator, async (req: Request, res) => {
-  try {
-    const deleted = await Posts.findByIdAndDelete(req.params.id);
+postsController.delete(
+  "/:id",
+  authValidator,
+  roleValidator,
+  async (req: Request, res) => {
+    try {
+      const deleted = await Posts.findOneAndDelete({
+        _id: req.params.id,
+        user: req.user?._id,
+      });
 
-    res.status(200).json(deleted);
-  } catch (error) {
-    res.status(400).json(null);
+      if (!deleted) res.status(403).json(null);
+      else {
+        res.status(200).json(deleted);
+      }
+    } catch (error) {
+      res.status(400).json(null);
+    }
   }
-});
+);
 
 postsController.get(
   "//user/:user_id",

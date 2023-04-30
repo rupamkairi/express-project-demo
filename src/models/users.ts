@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { roles } from "../roles";
 const { Types } = Schema;
 
 export const userSchema = new Schema(
@@ -6,6 +7,11 @@ export const userSchema = new Schema(
     name: Types.String,
     email: Types.String,
     password: Types.String,
+    role: {
+      type: Types.String,
+      enum: [roles.admin, roles.user, roles.owner, roles.viewer],
+      default: roles.user,
+    },
   },
   {
     timestamps: true,
