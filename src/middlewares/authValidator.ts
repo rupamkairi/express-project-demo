@@ -8,6 +8,7 @@ export default async function authValidator(
   next: NextFunction
 ) {
   try {
+    // console.log(req.cookies.access_token);
     const token =
       req.cookies.access_token || req.headers["authorization"]?.split(" ")[1]!;
 

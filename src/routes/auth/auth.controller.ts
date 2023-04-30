@@ -17,7 +17,10 @@ authController.post("/signup", async (req, res) => {
       role: created.role,
     });
 
-    res.cookie("access_token", jwtoken);
+    res.cookie("access_token", jwtoken, {
+      // secure: true,
+      httpOnly: true,
+    });
     res.status(200).json({ token: jwtoken, user: created });
   } catch (error) {
     res.status(400).json(null);
@@ -40,7 +43,10 @@ authController.post("/signin", async (req, res) => {
           role: found.role,
         });
 
-        res.cookie("access_token", jwtoken);
+        res.cookie("access_token", jwtoken, {
+          secure: true,
+          httpOnly: true,
+        });
         res.status(200).json({ token: jwtoken, user: found });
       }
     }
@@ -62,7 +68,10 @@ authController.post("/forgot", async (req, res) => {
       );
       // email the token some way maybe reset password link, this is valid for 5min
 
-      res.cookie("reset_token", resetToken);
+      res.cookie("reset_token", resetToken, {
+        // secure: true,
+        httpOnly: true,
+      });
       res.status(200).json(null);
     }
   } catch (error) {
@@ -88,7 +97,10 @@ authController.post("/reset", resetValidator, async (req: Request, res) => {
       });
 
       res.clearCookie("reset_token");
-      res.cookie("access_token", jwtoken);
+      res.cookie("access_token", jwtoken, {
+        // secure: true,
+        httpOnly: true,
+      });
       res.status(200).json({ token: jwtoken, user: updated });
     }
   } catch (error) {
