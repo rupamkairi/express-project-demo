@@ -1,10 +1,10 @@
 {
-  "name": "cutshort-todo",
+  "name": "express-demo-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start:dev": "nodemon ./src/www.ts",
-    "dev": "DEBUG=cutshort-todo:* npm run start:dev",
+    "dev": "DEBUG=express-demo-api:* npm run start:dev",
     "build": "tsc",
     "start": "node ./dist/bin/www"
   },
