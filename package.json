@@ -6,7 +6,7 @@
     "start:dev": "nodemon ./src/www.ts",
     "dev": "DEBUG=express-demo-api:* npm run start:dev",
     "build": "tsc",
-    "start": "node ./dist/bin/www"
+    "start": "node ./dist/www"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.2",

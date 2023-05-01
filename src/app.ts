@@ -34,6 +34,6 @@ app.use(
 
 dbConnect();
 
-app.use("/", limiter, indexRouter);
+app.use("/api", limiter, indexRouter);
 
 export default app;
