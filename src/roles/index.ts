@@ -1,8 +1,6 @@
 export enum roles {
   admin = "ADMIN",
   user = "USER",
-  owner = "OWNER",
-  viewer = "VIEWER",
 }
 
 enum resources {

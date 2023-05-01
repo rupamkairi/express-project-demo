@@ -14,7 +14,7 @@ authController.post("/signup", async (req, res) => {
     const created = await Users.create(data);
     const jwtoken = await generateToken({
       _id: created._id,
-      role: created.role,
+      roles: created.roles,
     });
 
     res.cookie("access_token", jwtoken, {
@@ -40,11 +40,11 @@ authController.post("/signin", async (req, res) => {
       else {
         const jwtoken = await generateToken({
           _id: found?._id,
-          role: found.role,
+          roles: found.roles,
         });
 
         res.cookie("access_token", jwtoken, {
-          secure: true,
+          // secure: true,
           httpOnly: true,
         });
         res.status(200).json({ token: jwtoken, user: found });
@@ -93,7 +93,7 @@ authController.post("/reset", resetValidator, async (req: Request, res) => {
     else {
       const jwtoken = await generateToken({
         _id: updated?._id,
-        role: updated.role,
+        roles: updated.roles,
       });
 
       res.clearCookie("reset_token");

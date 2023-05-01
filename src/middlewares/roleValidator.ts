@@ -2,22 +2,17 @@ import { NextFunction, Response } from "express";
 import { Request } from "../types";
 import { roles } from "../roles";
 
-export default async function roleValidator(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    switch (req.user?.role) {
-      case roles.admin:
-        return res.status(403).json(null);
+export async function rolesValidator(...roles: roles[]) {
+  return function (req: Request, res: Response, next: NextFunction) {};
+}
 
-      default:
-        // maybe additional properties can be set
-        // such as other allowed permissions
-        next();
+export function scopeValidator(validator: any) {
+  return async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      await validator(req, res);
+      next();
+    } catch (error) {
+      res.status(500).json(null);
     }
-  } catch (error) {
-    res.status(403).json(null);
-  }
+  };
 }

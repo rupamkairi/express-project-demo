@@ -17,7 +17,7 @@ export default async function authValidator(
       const { data, isValid } = await validateToken(token);
 
       if (isValid) {
-        req.user = { _id: data._id, role: data.role };
+        req.user = { _id: data._id, roles: data.roles };
         next();
       } else res.status(400).json(null);
     }

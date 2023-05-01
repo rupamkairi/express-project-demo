@@ -1,8 +1,10 @@
 import { JwtPayload } from "jsonwebtoken";
+import { Schema } from "mongoose";
+import { roles } from "../roles";
 
 export type jwtPayload = JwtPayload & {
-  _id: string;
-  role: string;
+  _id: Schema.Types.ObjectId;
+  roles: roles[];
 };
 
 export enum jwtPurposeEnum {

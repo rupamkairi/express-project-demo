@@ -7,10 +7,10 @@ export const userSchema = new Schema(
     name: Types.String,
     email: Types.String,
     password: Types.String,
-    role: {
-      type: Types.String,
-      enum: [roles.admin, roles.user, roles.owner, roles.viewer],
-      default: roles.user,
+    roles: {
+      type: [Types.String],
+      enum: [roles.admin, roles.user],
+      default: [roles.user],
     },
   },
   {
