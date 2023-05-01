@@ -4,9 +4,9 @@ import { Request } from "../../types";
 import Users from "../../models/users";
 import { scopeValidator } from "../../middlewares/roleValidator";
 import {
-  deleteUsersAccess,
+  deleteUserAccess,
   readAllUsersAccess,
-  readUsersAccess,
+  readUserAccess,
   updateUserAccess,
 } from "./users.guard";
 
@@ -35,12 +35,10 @@ usersController.get(
 usersController.get(
   "/:id",
   authValidator,
-  scopeValidator(readUsersAccess),
+  scopeValidator(readUserAccess),
   async (req: Request, res: Response) => {
     try {
       let filter = req.mongodb?.query?.filter;
-
-      console.log(filter);
 
       if (!filter._id) res.json(null);
       else {
@@ -57,7 +55,7 @@ usersController.get(
 usersController.put(
   "/:id",
   authValidator,
-  scopeValidator(readUsersAccess),
+  scopeValidator(readUserAccess),
   async (req: Request, res: Response) => {
     try {
       let filter = req.mongodb?.query?.filter;
@@ -81,7 +79,7 @@ usersController.put(
 usersController.delete(
   "/:id",
   authValidator,
-  scopeValidator(deleteUsersAccess),
+  scopeValidator(deleteUserAccess),
   async (req: Request, res: Response) => {
     try {
       let filter = req.mongodb?.query?.filter;

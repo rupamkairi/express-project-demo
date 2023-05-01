@@ -2,12 +2,12 @@ import { Response } from "express";
 import { roles } from "../../roles";
 import { Request } from "../../types";
 
-export function readAllUsersAccess(req: Request) {
+export function readAllUsersAccess(req: Request, res: Response) {
   try {
     let filter = req?.mongodb?.query?.filter ?? {};
 
     if (req.user?.roles?.includes(roles.admin)) {
-      filter = { ...filter, _id: req.params.id };
+      filter = { ...filter };
     } else if (req.user?.roles?.includes(roles.user)) {
       filter = { ...filter, _id: req.user._id };
     } else {
@@ -15,12 +15,11 @@ export function readAllUsersAccess(req: Request) {
 
     req.mongodb = { query: { filter } };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }
 
-export function readUsersAccess(req: Request, res: Response) {
+export function readUserAccess(req: Request, res: Response) {
   try {
     let filter = req?.mongodb?.query?.filter ?? {};
 
@@ -37,14 +36,13 @@ export function readUsersAccess(req: Request, res: Response) {
 
     req.mongodb = { query: { filter } };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }
 
-export const updateUserAccess = readUsersAccess;
+export const updateUserAccess = readUserAccess;
 
-export function deleteUsersAccess(req: Request, res: Response) {
+export function deleteUserAccess(req: Request, res: Response) {
   try {
     let filter = req?.mongodb?.query?.filter ?? {};
 
@@ -56,7 +54,6 @@ export function deleteUsersAccess(req: Request, res: Response) {
 
     req.mongodb = { query: { filter } };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }
