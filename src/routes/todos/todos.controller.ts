@@ -4,6 +4,7 @@ import Todos from "../../models/todos";
 import authValidator from "../../middlewares/authValidator";
 import { scopeValidator } from "../../middlewares/roleValidator";
 import {
+  deleteTodoAccess,
   readAllTodosAccess,
   readTodoAccess,
   updateTodoAccess,
@@ -95,23 +96,29 @@ todosController.put(
   }
 );
 
-todosController.delete("/:id", authValidator, async (req: Request, res) => {
-  try {
-    let filter = req.mongodb?.query?.filter;
+todosController.delete(
+  "/:id",
+  authValidator,
+  scopeValidator(deleteTodoAccess),
+  async (req: Request, res) => {
+    try {
+      let filter = req.mongodb?.query?.filter;
 
-    if (!filter._id || !filter.user) res.status(404).json(null);
-    else {
-      const deleted = await Todos.findOneAndDelete(filter);
-
-      if (!deleted) res.status(403).json(null);
+      if (!filter._id || !filter.user) res.status(404).json(null);
       else {
-        res.status(200).json(deleted);
+        const deleted = await Todos.findOneAndDelete(filter);
+
+        if (!deleted) res.status(403).json(null);
+        else {
+          res.status(200).json(deleted);
+        }
       }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(null);
     }
-  } catch (error) {
-    res.status(400).json(null);
   }
-});
+);
 
 todosController.get(
   "//user/:user_id",

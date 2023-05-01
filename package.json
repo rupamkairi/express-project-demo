@@ -6,7 +6,8 @@
     "start:dev": "nodemon ./src/www.ts",
     "dev": "DEBUG=express-demo-api:* npm run start:dev",
     "build": "tsc",
-    "start": "node ./dist/www"
+    "start": "node ./dist/www",
+    "test": "jest"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.2",
@@ -20,20 +21,26 @@
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
     "helmet": "^6.1.5",
+    "jest": "^29.5.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "supertest": "^6.3.3"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.5",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.17",
     "@types/express-mung": "^0.5.2",
     "@types/express-session": "^1.17.7",
+    "@types/jest": "^29.5.1",
     "@types/morgan": "^1.9.4",
     "@types/node": "^18.16.3",
+    "@types/supertest": "^2.0.12",
     "nodemon": "^2.0.22",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1"
   }
 }

@@ -5,7 +5,7 @@ const { Types } = Schema;
 export const userSchema = new Schema(
   {
     name: Types.String,
-    email: Types.String,
+    email: { type: Types.String, unique: true },
     password: Types.String,
     roles: {
       type: [Types.String],

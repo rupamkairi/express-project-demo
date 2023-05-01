@@ -8,20 +8,20 @@ export default async function authValidator(
   next: NextFunction
 ) {
   try {
-    // console.log(req.cookies.access_token);
     const token =
       req.cookies.access_token || req.headers["authorization"]?.split(" ")[1]!;
 
-    if (!token) res.status(400).json(null);
+    if (!token) res.status(401).json(null);
     else {
       const { data, isValid } = await validateToken(token);
 
       if (isValid) {
         req.user = { _id: data._id, roles: data.roles };
         next();
-      } else res.status(400).json(null);
+      } else res.status(401).json(null);
     }
   } catch (error) {
+    console.log(error);
     res.clearCookie("access_token");
     res.status(401).json(null);
 
