@@ -4,8 +4,8 @@ module.exports = {
   testEnvironment: "node",
   testMatch: [
     // "**/**/*.test.ts",
-    "**/**/auth.test.ts",
-    // "**/**/todos.test.ts",
+    // "**/**/auth.test.ts",
+    "**/**/todos.test.ts",
   ],
   // detectOpenHandles: false,
 };

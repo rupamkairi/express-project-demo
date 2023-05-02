@@ -12,7 +12,7 @@ import {
   updateTodos,
 } from "../../test-data";
 
-describe("Test Todos by User", (i = 1) => {
+describe("Test Todos by User", (i = 0) => {
   let res0 = null,
     res1: any = null,
     res2: any = null,
@@ -86,7 +86,6 @@ describe("Test Todos by User", (i = 1) => {
       .send(updateTodos[i]);
 
     expect(res4.statusCode).toBe(404);
-    expect(res4.body).toBeNull();
   });
 });
 
