@@ -3,7 +3,10 @@ const { Types } = Schema;
 
 export const todoSchema = new Schema(
   {
-    label: Types.String,
+    label: {
+      type: Types.String,
+      // index: "text",
+    },
     completed: {
       type: Types.Boolean,
       default: false,
@@ -21,6 +24,8 @@ export const todoSchema = new Schema(
     timestamps: true,
   }
 );
+
+todoSchema.index({ label: "text" });
 
 const Todos = model("todos", todoSchema);
 

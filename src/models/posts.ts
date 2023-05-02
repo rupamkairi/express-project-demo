@@ -3,7 +3,9 @@ const { Types } = Schema;
 
 export const postSchema = new Schema(
   {
-    title: Types.String,
+    title: {
+      type: Types.String,
+    },
     user: {
       type: Types.ObjectId,
       ref: "users",
@@ -16,6 +18,8 @@ export const postSchema = new Schema(
   },
   { timestamps: true }
 );
+
+postSchema.index({ title: "text" });
 
 const Posts = model("posts", postSchema);
 

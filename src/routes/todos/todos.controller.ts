@@ -9,6 +9,7 @@ import {
   readTodoAccess,
   updateTodoAccess,
 } from "./todos.guard";
+import { accessError, resourceError } from "../../constants/errors";
 
 const todosController = Router();
 
@@ -18,15 +19,19 @@ todosController.get(
   scopeValidator(readAllTodosAccess),
   async (req: Request, res) => {
     try {
-      let { query = "", page = 0, limit = 5 } = req.query;
+      let { query = "", page = 1, limit = 5 } = req.query;
       (page = +page), (limit = +limit);
 
       let filter = req.mongodb?.query?.filter;
-      const todos = await Todos.find(filter);
+      if (query) filter = { ...filter, $text: { $search: query } };
+      const todos = await Todos.find(filter)
+        .sort({ createdAt: 1 })
+        .limit(limit)
+        .skip(limit * (page - 1));
 
       res.status(200).json(todos);
     } catch (error) {
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -39,7 +44,7 @@ todosController.post("", authValidator, async (req: Request, res) => {
 
     res.status(200).json(created);
   } catch (error) {
-    res.status(400).json(null);
+    res.status(400).json(error);
   }
 });
 
@@ -51,21 +56,21 @@ todosController.get(
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id) res.status(404).json(null);
+      if (!filter._id) res.status(404).json(resourceError.notFound("Todo"));
       else {
         const found = await Todos.findOne(filter).populate({
           path: "user",
           select: "name",
         });
 
-        if (!found) res.status(404).json(null);
+        if (!found) res.status(404).json(resourceError.notFound("Todo"));
         else {
           res.status(200).json(found);
         }
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -78,20 +83,21 @@ todosController.put(
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id || !filter.user) res.status(404).json(null);
+      if (!filter._id || !filter.user)
+        res.status(404).json(resourceError.notFound("Todo"));
       else {
         let data = req.body;
         const updated = await Todos.findOneAndUpdate(filter, data, {
           new: true,
         });
 
-        if (!updated) res.status(403).json(null);
+        if (!updated) res.status(403).json(accessError.forbidden());
         else {
           res.status(200).json(updated);
         }
       }
     } catch (error) {
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -104,18 +110,19 @@ todosController.delete(
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id || !filter.user) res.status(404).json(null);
+      if (!filter._id || !filter.user)
+        res.status(404).json(resourceError.notFound("Todo"));
       else {
         const deleted = await Todos.findOneAndDelete(filter);
 
-        if (!deleted) res.status(403).json(null);
+        if (!deleted) res.status(403).json(accessError.forbidden());
         else {
           res.status(200).json(deleted);
         }
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -126,12 +133,25 @@ todosController.get(
   scopeValidator(readAllTodosAccess),
   async (req: Request, res) => {
     try {
-      const found = await Todos.find({ user: req.params.user_id });
+      let { query = "", page = 1, limit = 5 } = req.query;
+      (page = +page), (limit = +limit);
+
+      let filter = req.mongodb?.query?.filter;
+      if (query)
+        filter = {
+          ...filter,
+          user: req.params.user_id,
+          $text: { $search: query },
+        };
+      const found = await Todos.find(filter)
+        .sort({ createdAt: 1 })
+        .limit(limit)
+        .skip(limit * (page - 1));
 
       res.status(200).json(found);
     } catch (error) {
       console.log(error);
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );

@@ -9,6 +9,7 @@ import {
   readUserAccess,
   updateUserAccess,
 } from "./users.guard";
+import { accessError } from "../../constants/errors";
 
 const usersController = Router();
 
@@ -27,7 +28,7 @@ usersController.get(
 
       res.status(200).json(users);
     } catch (error) {
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -40,14 +41,14 @@ usersController.get(
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id) res.json(null);
+      if (!filter._id) res.json(accessError.forbidden());
       else {
         const user = await Users.findOne(filter);
 
         res.status(200).json(user);
       }
     } catch (error) {
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -55,12 +56,12 @@ usersController.get(
 usersController.put(
   "/:id",
   authValidator,
-  scopeValidator(readUserAccess),
+  scopeValidator(updateUserAccess),
   async (req: Request, res: Response) => {
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id) res.json(null);
+      if (!filter._id) res.json(accessError.forbidden());
       else {
         let data = req.body;
         const updated = await Users.findOneAndUpdate(filter, data, {
@@ -71,7 +72,7 @@ usersController.put(
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -84,15 +85,14 @@ usersController.delete(
     try {
       let filter = req.mongodb?.query?.filter;
 
-      if (!filter._id) res.json(null);
+      if (!filter._id) res.json(accessError.forbidden());
       else {
         const deleted = await Users.findOneAndDelete(filter);
 
         res.status(200).json(deleted);
       }
     } catch (error) {
-      console.log(error);
-      res.status(400).json(null);
+      res.status(400).json(error);
     }
   }
 );
@@ -102,7 +102,7 @@ usersController.get("/me", authValidator, async (req: Request, res) => {
     const user = await Users.findById(req.user?._id);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json(null);
+    res.status(400).json(error);
   }
 });
 

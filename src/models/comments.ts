@@ -3,7 +3,9 @@ const { Types } = Schema;
 
 export const commentSchema = new Schema(
   {
-    title: Types.String,
+    title: {
+      type: Types.String,
+    },
     post: {
       type: Types.ObjectId,
       ref: "posts",
@@ -17,6 +19,8 @@ export const commentSchema = new Schema(
     timestamps: true,
   }
 );
+
+commentSchema.index({ title: "text" });
 
 const Comments = model("comments", commentSchema);
 

@@ -4,6 +4,7 @@ import { compareHash, generateHash } from "../../utils/encryption";
 import { generateToken } from "../../utils/jwt";
 import { Request, jwtPurposeEnum } from "../../types";
 import { resetValidator } from "../../middlewares/authValidator";
+import { authErrors } from "../../constants/errors";
 
 const authController = Router();
 
@@ -22,8 +23,12 @@ authController.post("/signup", async (req, res) => {
       httpOnly: true,
     });
     res.status(200).json({ token: jwtoken, user: created });
-  } catch (error) {
-    res.status(400).json(null);
+  } catch (error: any) {
+    if (error.code === 11000)
+      res.status(400).json(authErrors.duplicate("Email"));
+    else {
+      res.status(400).json(null);
+    }
   }
 });
 
@@ -32,11 +37,11 @@ authController.post("/signin", async (req, res) => {
     let { identifier, password } = req.body;
     const found = await Users.findOne({ email: identifier });
 
-    if (!found) res.status(404).json(null);
+    if (!found) res.status(404).json(authErrors.credentialMismatch());
     else {
       const match = await compareHash(password, found?.password!);
 
-      if (!match) res.status(403).json(null);
+      if (!match) res.status(404).json(authErrors.credentialMismatch());
       else {
         const jwtoken = await generateToken({
           _id: found?._id,
