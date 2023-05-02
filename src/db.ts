@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const mongoURI = "mongodb://127.0.0.1:27017/cutshort-api";
+const mongoURI = process.env.MONGODBURI!;
+console.log(mongoURI);
 // const mongoURI =
 //   "mongodb+srv://rupamkairi:Rupam435Kairi@cluster0.5whf3.mongodb.net/cutshort-todo";
 

@@ -24,7 +24,7 @@ app.use(
   cookieSession({
     // this actually not working normally but maybe on deployment
     // name: "*",
-    secret: "Ej*ZFM3by2!bGzsa",
+    secret: process.env.COOKIESECRET!,
     secure: true,
     signed: true,
     httpOnly: true,

@@ -1,7 +1,7 @@
 import { decode, sign } from "jsonwebtoken";
 import { jwtPayload, jwtPurposeEnum } from "../types";
 
-const jwtSecret = "vnjA8}W/NpR/hdCx}Pxjn+Zyf8d7G:";
+const jwtSecret = process.env.JWTSECRET!;
 
 export async function generateToken(
   data: any,
