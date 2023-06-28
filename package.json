@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "nodemon ./src/www.ts",
-    "dev": "DEBUG=express-demo-api:* npm run start:dev",
+    "dev": "npm run start:dev",
     "build": "tsc",
     "start": "node ./dist/www",
     "test": "jest"
