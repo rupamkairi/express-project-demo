@@ -6,7 +6,7 @@ const subscriptionsRouter = Router();
 subscriptionsRouter.get("", async (req, res) => {
   try {
     let allSubscriptions = await Subscription.findAll({
-      include: ["payments"],
+      include: ["payments", "user"],
     });
     return res.status(200).json(allSubscriptions);
   } catch (error) {

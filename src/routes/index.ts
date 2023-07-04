@@ -3,6 +3,7 @@ import subscriptionsRouter from "./subscriptions";
 import productsRouter from "./products";
 import paymentsRouter from "./payments";
 import migrationsRouter from "./migrations";
+import usersRouter from "./users";
 // import usersRouter from "./users/users.index";
 // import authRouter from "./auth/auth.index";
 // import todosRouter from "./todos/todos.index";
@@ -24,5 +25,6 @@ indexRoute.use("/migrations", migrationsRouter);
 indexRoute.use("/subscriptions", subscriptionsRouter);
 indexRoute.use("/products", productsRouter);
 indexRoute.use("/payments", paymentsRouter);
+indexRoute.use("/users", usersRouter);
 
 export default indexRoute;

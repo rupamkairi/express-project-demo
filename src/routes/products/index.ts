@@ -13,8 +13,8 @@ productsRouter.get("", async (req, res) => {
 productsRouter.post("", async (req, res) => {
   try {
     let newProduct = new Product();
-    let savedProdcut = await newProduct.save();
-    return res.status(201).json(savedProdcut.toJSON());
+    let savedProduct = await newProduct.save();
+    return res.status(201).json(savedProduct.toJSON());
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
