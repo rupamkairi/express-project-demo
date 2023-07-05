@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../db";
+import { Entity, Fields } from "remult";
 
 class Product extends Model {}
 

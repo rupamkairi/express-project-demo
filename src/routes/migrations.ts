@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { sync, drop } from "../models/migration";
-import { link } from "../models/relation";
+import { MigrationsController } from "../controllers/migration";
 
 const migrationsRouter = Router();
+const migrationsController = new MigrationsController();
 
 migrationsRouter.get("/sync", async (req, res) => {
   try {
-    sync();
+    // sync();
+    migrationsController.sync();
     res.sendStatus(200);
   } catch (error) {
     res.sendStatus(400);
@@ -15,7 +16,8 @@ migrationsRouter.get("/sync", async (req, res) => {
 
 migrationsRouter.get("/link", async (req, res) => {
   try {
-    link();
+    // link();
+    migrationsController.link();
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -25,7 +27,8 @@ migrationsRouter.get("/link", async (req, res) => {
 
 migrationsRouter.get("/drop", async (req, res) => {
   try {
-    drop();
+    // drop();
+    migrationsController.drop();
     res.sendStatus(200);
   } catch (error) {
     res.sendStatus(400);

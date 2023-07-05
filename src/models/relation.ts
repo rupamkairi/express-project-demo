@@ -2,7 +2,7 @@ import Payment from "./payment";
 import Subscription from "./subscription";
 import User from "./user";
 
-export function link() {
+export function linkTables() {
   Subscription.hasMany(Payment, {
     foreignKey: "subscription_id",
     as: "payments",

@@ -10,11 +10,13 @@ import indexRouter from "./routes/index";
 import limiter from "./middlewares/rateLimiter";
 // import redact, { modify } from "./middlewares/resRedactor";
 
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument from "./swagger.json";
+
 const app = express();
 
 app.set("trust proxy", 1);
 app.disable("x-powered-by");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger("dev"));
@@ -30,10 +32,12 @@ app.use(
     httpOnly: true,
   })
 );
+
 // app.use(mung.json(redact));
 
 dbConnect();
 
 app.use("/api", limiter, indexRouter);
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 export default app;
