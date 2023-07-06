@@ -28,7 +28,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/migrations/sync": {
+		"/api/migrations/sync": {
 			"get": {
 				"operationId": "Sync",
 				"responses": {
@@ -47,7 +47,7 @@
 				"parameters": []
 			}
 		},
-		"/migrations/link": {
+		"/api/migrations/link": {
 			"get": {
 				"operationId": "Link",
 				"responses": {
@@ -74,7 +74,7 @@
 				"parameters": []
 			}
 		},
-		"/migrations/drop": {
+		"/api/migrations/drop": {
 			"get": {
 				"operationId": "Drop",
 				"responses": {

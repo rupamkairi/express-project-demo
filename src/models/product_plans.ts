@@ -1,9 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../db";
+import { Entity, Fields } from "remult";
 
-class Subscription extends Model {}
+class ProductPlans extends Model {}
 
-Subscription.init(
+ProductPlans.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,7 +12,7 @@ Subscription.init(
       allowNull: false,
       primaryKey: true,
     },
-    user_id: {
+    product_id: {
       type: DataTypes.INTEGER,
     },
     plan_id: {
@@ -22,7 +23,7 @@ Subscription.init(
     updated_at: { type: DataTypes.DATE, allowNull: true },
     updated_by: { type: DataTypes.INTEGER, allowNull: true },
   },
-  { sequelize, modelName: "Subscription", tableName: "subscription" }
+  { sequelize, modelName: "Plan", tableName: "plan" }
 );
 
-export default Subscription;
+export default ProductPlans;

@@ -6,7 +6,6 @@ const migrationsController = new MigrationsController();
 
 migrationsRouter.get("/sync", async (req, res) => {
   try {
-    // sync();
     migrationsController.sync();
     res.sendStatus(200);
   } catch (error) {
@@ -16,7 +15,6 @@ migrationsRouter.get("/sync", async (req, res) => {
 
 migrationsRouter.get("/link", async (req, res) => {
   try {
-    // link();
     migrationsController.link();
     res.sendStatus(200);
   } catch (error) {
@@ -27,7 +25,6 @@ migrationsRouter.get("/link", async (req, res) => {
 
 migrationsRouter.get("/drop", async (req, res) => {
   try {
-    // drop();
     migrationsController.drop();
     res.sendStatus(200);
   } catch (error) {

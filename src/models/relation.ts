@@ -1,5 +1,6 @@
 import Payment from "./payment";
 import Subscription from "./subscription";
+import Plan from "./plan";
 import User from "./user";
 
 export function linkTables() {
@@ -19,4 +20,11 @@ export function linkTables() {
     // onDelete: "CASCADE",
   });
   Subscription.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+  Plan.hasMany(Subscription, {
+    foreignKey: "plan_id",
+    as: "subscriptions",
+    // onDelete: "CASCADE",
+  });
+  Subscription.belongsTo(Plan, { foreignKey: "plan_id", as: "plan" });
 }
