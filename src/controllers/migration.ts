@@ -1,6 +1,8 @@
+import { sequelize } from "../db";
 import Payment from "../models/payment";
 import Plan from "../models/plan";
 import Product from "../models/product";
+import ProductPlans from "../models/product_plans";
 import { linkTables } from "../models/relation";
 import Subscription from "../models/subscription";
 import User from "../models/user";
@@ -18,8 +20,12 @@ export class MigrationsController extends Controller {
     User.sync();
     Subscription.sync();
     Payment.sync();
-    Plan.sync();
+
     Product.sync();
+    Plan.sync();
+    ProductPlans.sync();
+
+    sequelize.sync({ force: true });
 
     return { message: "OK" };
   }
@@ -36,8 +42,12 @@ export class MigrationsController extends Controller {
     User.drop();
     Subscription.drop();
     Payment.drop();
-    Plan.drop();
+
+    ProductPlans.drop();
     Product.drop();
+    Plan.drop();
+
+    sequelize.drop();
 
     return { message: "OK" };
   }
