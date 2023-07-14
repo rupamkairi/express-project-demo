@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 import { Sequelize } from "sequelize";
+import {
+  drizzle as DrizzleORM,
+  PostgresJsDatabase,
+} from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
 const mongoURI = process.env.MONGODBURI!;
 
@@ -7,6 +12,7 @@ const mongoURI = process.env.MONGODBURI!;
 //   "mongodb+srv://rupamkairi:Rupam435Kairi@cluster0.5whf3.mongodb.net/cutshort-todo";
 
 export let sequelize: Sequelize;
+export let drizzle: PostgresJsDatabase;
 
 function dbPGConfig() {
   try {
@@ -19,20 +25,23 @@ function dbPGConfig() {
 
     console.log(pgDBHost, pgDPort, pgDBName, pgDBUsername, pgDBPassword);
 
-    // const sequelize = new Sequelize(pgDBName, pgDBUsername, pgDBPassword, {
+    // sequelize = new Sequelize(pgDBName, pgDBUsername, pgDBPassword, {
     //   host: pgDBHost,
     //   port: +pgDPort,
+    //   dialect: "postgres",
     // });
 
-    sequelize = new Sequelize(pgDBName, pgDBUsername, pgDBPassword, {
+    // return sequelize;
+
+    const client = postgres({
       host: pgDBHost,
       port: +pgDPort,
-      dialect: "postgres",
+      db: pgDBName,
+      user: pgDBUsername,
+      pass: pgDBPassword,
     });
-
-    // console.log(sequelize);
-
-    return sequelize;
+    const drizzle = DrizzleORM(client);
+    return drizzle;
   } catch (error) {
     throw error;
   }
@@ -40,19 +49,16 @@ function dbPGConfig() {
 
 export async function dbConnect() {
   try {
-    const sequelize = dbPGConfig();
-
-    await sequelize
-      .authenticate()
-      .then(() => {
-        console.log("Connected to express-project [postgres://localhost:5432]");
-      })
-      .catch((error) => {
-        console.error("Unable to connect to the express-project", error);
-      });
-
-    return sequelize;
-
+    // const sequelize = dbPGConfig();
+    // await sequelize
+    //   .authenticate()
+    //   .then(() => {
+    //     console.log("Connected to express-project [postgres://localhost:5432]");
+    //   })
+    //   .catch((error) => {
+    //     console.error("Unable to connect to the express-project", error);
+    //   });
+    // return sequelize;
     // const connection = await mongoose.connect(mongoURI);
     // console.log("MongoDB Connected");
   } catch (error) {
@@ -60,9 +66,6 @@ export async function dbConnect() {
   }
 }
 
-function db() {
-  const sequelize = dbPGConfig();
-  return sequelize;
+export default function db() {
+  return dbPGConfig();
 }
-
-export default db();
