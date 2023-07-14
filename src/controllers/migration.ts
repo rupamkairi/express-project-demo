@@ -1,11 +1,11 @@
 import { sequelize } from "../db";
-import Payment from "../models/payment";
-import Plan from "../models/plan";
-import Product from "../models/product";
-import ProductPlans from "../models/product_plans";
+import Payment from "../models/Payment";
+import Plan from "../models/Plan";
+import Product from "../models/Product";
+import ProductPlans from "../models/ProductPlans";
 import { linkTables } from "../models/relation";
-import Subscription from "../models/subscription";
-import User from "../models/user";
+import Subscription from "../models/Subscription";
+import User from "../models/User";
 
 import { Controller, Route, Get } from "tsoa";
 
@@ -20,12 +20,9 @@ export class MigrationsController extends Controller {
     User.sync();
     Subscription.sync();
     Payment.sync();
-
     Product.sync();
     Plan.sync();
     ProductPlans.sync();
-
-    sequelize.sync({ force: true });
 
     return { message: "OK" };
   }
@@ -42,10 +39,9 @@ export class MigrationsController extends Controller {
     User.drop();
     Subscription.drop();
     Payment.drop();
-
-    ProductPlans.drop();
     Product.drop();
     Plan.drop();
+    ProductPlans.drop();
 
     sequelize.drop();
 

@@ -20,7 +20,7 @@ User.init(
     // updated_at: { type: DataTypes.DATE, allowNull: true },
     // updated_by: { type: DataTypes.INTEGER, allowNull: true },
   },
-  { sequelize, modelName: "User", tableName: "user" }
+  { sequelize, modelName: "User", tableName: "User" }
 );
 
 export default User;

@@ -1,13 +1,12 @@
 import { Router } from "express";
-import Product from "../../models/product";
-import Plan from "../../models/plan";
+import Product from "../../models/Product";
 
 const productsRouter = Router();
 
 productsRouter.get("", async (req, res) => {
   try {
     let allProducts = await Product.findAll({
-      include: [{ model: Plan, as: "plans" }],
+      include: ["plans"],
     });
 
     return res.status(200).json(allProducts);
@@ -23,10 +22,9 @@ productsRouter.post("", async (req, res) => {
     };
     console.log(newProduct);
     let createdProduct = await Product.create(newProduct);
-    let savedProduct = createdProduct;
-    // let savedProduct = await newProduct.save();
+    let savedProduct = (await createdProduct.save()).toJSON();
 
-    return res.status(201).json(savedProduct.toJSON());
+    return res.status(201).json(savedProduct);
   } catch (error) {
     console.log(error);
     res.sendStatus(400);

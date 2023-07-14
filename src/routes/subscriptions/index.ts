@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Subscription from "../../models/subscription";
+import Subscription from "../../models/Subscription";
 
 const subscriptionsRouter = Router();
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Payment from "../../models/payment";
+import Payment from "../../models/Payment";
 
 const paymentsRouter = Router();
 

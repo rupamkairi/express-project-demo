@@ -22,7 +22,7 @@ Subscription.init(
     // updated_at: { type: DataTypes.DATE, allowNull: true },
     // updated_by: { type: DataTypes.INTEGER, allowNull: true },
   },
-  { sequelize, modelName: "Subscription", tableName: "subscription" }
+  { sequelize, modelName: "Subscription", tableName: "Subscription" }
 );
 
 export default Subscription;

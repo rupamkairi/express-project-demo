@@ -19,7 +19,7 @@ Payment.init(
     // updated_at: { type: DataTypes.DATE, allowNull: true },
     // updated_by: { type: DataTypes.INTEGER, allowNull: true },
   },
-  { sequelize, modelName: "Payment", tableName: "payment" }
+  { sequelize, modelName: "Payment", tableName: "Payment" }
 );
 
 export default Payment;
