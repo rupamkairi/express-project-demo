@@ -5,11 +5,14 @@ import {
   PostgresJsDatabase,
 } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 
 const mongoURI = process.env.MONGODBURI!;
 
 // const mongoURI =
 //   "mongodb+srv://rupamkairi:Rupam435Kairi@cluster0.5whf3.mongodb.net/cutshort-todo";
+
+const pgURI = "postgres://postgres:password@localhost:5432/express-project";
 
 export let sequelize: Sequelize;
 export let drizzle: PostgresJsDatabase;
@@ -59,6 +62,13 @@ export async function dbConnect() {
     //     console.error("Unable to connect to the express-project", error);
     //   });
     // return sequelize;
+    //
+    const drizzle = dbPGConfig();
+    migrate(drizzle, {
+      migrationsFolder: "./src/drizzle",
+      migrationsTable: "drizzle_migrations",
+    });
+    //
     // const connection = await mongoose.connect(mongoURI);
     // console.log("MongoDB Connected");
   } catch (error) {

@@ -1,10 +1,6 @@
 import { Router } from "express";
-import subscriptionsRouter from "./subscriptions";
-import productsRouter from "./products";
-import paymentsRouter from "./payments";
 import migrationsRouter from "./migrations";
-import usersRouter from "./users";
-import planRouter from "./plans";
+
 // import usersRouter from "./users/users.index";
 // import authRouter from "./auth/auth.index";
 // import todosRouter from "./todos/todos.index";
@@ -22,11 +18,5 @@ indexRoute.get("", (req, res) => {
 // indexRoute.use("/posts", postsRouter);
 
 indexRoute.use("/migrations", migrationsRouter);
-
-indexRoute.use("/subscriptions", subscriptionsRouter);
-indexRoute.use("/plans", planRouter);
-indexRoute.use("/products", productsRouter);
-indexRoute.use("/payments", paymentsRouter);
-indexRoute.use("/users", usersRouter);
 
 export default indexRoute;
