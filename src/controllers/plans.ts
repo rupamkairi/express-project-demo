@@ -22,8 +22,11 @@ export class PlansController extends Controller {
   @Get("")
   public async getPlans() {
     try {
-      const all = await drizzle.select().from(plans);
-      return all;
+      const all = await drizzle.query.plans.findFirst({
+        with: {
+          productsToPlans: true,
+        },
+      });
     } catch (error) {
       return error;
     }

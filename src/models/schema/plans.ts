@@ -1,6 +1,6 @@
 import { InferModel, relations } from "drizzle-orm";
 import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
-import productToPlans from "./product-plans";
+import productsToPlans from "./product-plans";
 
 export const plans = pgTable("plans", {
   id: serial("id").primaryKey(),
@@ -8,7 +8,7 @@ export const plans = pgTable("plans", {
 });
 
 export const plansRelations = relations(plans, ({ many }) => ({
-  productToPlans: many(productToPlans),
+  productsToPlans: many(productsToPlans),
 }));
 
 export type Plan = InferModel<typeof plans>;

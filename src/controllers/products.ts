@@ -24,10 +24,9 @@ export class ProductsController extends Controller {
     try {
       const all = await drizzle.query.products.findMany({
         with: {
-          productToPlans: true,
+          productsToPlans: true,
         },
       });
-      console.log(all);
       return all;
     } catch (error) {
       return error;
