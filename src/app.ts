@@ -35,7 +35,7 @@ app.use(
 
 // app.use(mung.json(redact));
 
-dbConnect();
+// dbConnect();
 
 app.use("/api", limiter, indexRouter);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));

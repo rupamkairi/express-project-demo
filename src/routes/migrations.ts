@@ -9,6 +9,7 @@ migrationsRouter.get("/sync", async (req, res) => {
     migrationsController.sync();
     res.sendStatus(200);
   } catch (error) {
+    // console.log(error);
     res.sendStatus(400);
   }
 });
@@ -18,7 +19,7 @@ migrationsRouter.get("/link", async (req, res) => {
     migrationsController.link();
     res.sendStatus(200);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.sendStatus(400);
   }
 });
@@ -28,6 +29,7 @@ migrationsRouter.get("/drop", async (req, res) => {
     migrationsController.drop();
     res.sendStatus(200);
   } catch (error) {
+    // console.log(error);
     res.sendStatus(400);
   }
 });

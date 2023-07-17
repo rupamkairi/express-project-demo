@@ -6,6 +6,7 @@ import {
 } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
+import * as schema from "./models/schema";
 
 const mongoURI = process.env.MONGODBURI!;
 
@@ -35,16 +36,6 @@ function dbPGConfig() {
     // });
 
     // return sequelize;
-
-    const client = postgres({
-      host: pgDBHost,
-      port: +pgDPort,
-      db: pgDBName,
-      user: pgDBUsername,
-      pass: pgDBPassword,
-    });
-    const drizzle = DrizzleORM(client);
-    return drizzle;
   } catch (error) {
     throw error;
   }
@@ -63,11 +54,6 @@ export async function dbConnect() {
     //   });
     // return sequelize;
     //
-    const drizzle = dbPGConfig();
-    migrate(drizzle, {
-      migrationsFolder: "./src/drizzle",
-      migrationsTable: "drizzle_migrations",
-    });
     //
     // const connection = await mongoose.connect(mongoURI);
     // console.log("MongoDB Connected");
@@ -76,6 +62,20 @@ export async function dbConnect() {
   }
 }
 
+export async function dbMigration() {
+  try {
+    const migrationClient = postgres(pgURI, { max: 1 });
+    migrate(DrizzleORM(migrationClient), {
+      migrationsFolder: "src/drizzle",
+      migrationsTable: "drizzle_migrations",
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default function db() {
-  return dbPGConfig();
+  const queryClient = postgres(pgURI);
+  const drizzle = DrizzleORM(queryClient, { schema });
+  return drizzle;
 }

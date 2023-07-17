@@ -1,15 +1,11 @@
 import { Controller, Route, Get } from "tsoa";
-import { drizzle } from "../db";
-
-interface MigrationsResponse {
-  message: string;
-}
+import { dbMigration, drizzle } from "../db";
 
 @Route("api/migrations")
 export class MigrationsController extends Controller {
   @Get("/sync")
-  public async sync(): Promise<MigrationsResponse> {
-    console.log(drizzle);
+  public async sync() {
+    await dbMigration();
     return { message: "OK" };
   }
 

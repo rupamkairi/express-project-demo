@@ -1,11 +1,11 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "afb2f7e1-9c0e-407a-8a6c-58e3a35a78d3",
+  "id": "6affe62b-5ca8-4206-915e-60a501135f3f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "users": {
-      "name": "users",
+    "plans": {
+      "name": "plans",
       "schema": "",
       "columns": {
         "id": {
@@ -14,14 +14,30 @@
           "primaryKey": true,
           "notNull": true
         },
-        "full_name": {
-          "name": "full_name",
-          "type": "text",
+        "name": {
+          "name": "name",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "products": {
+      "name": "products",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
         },
-        "phone": {
-          "name": "phone",
+        "name": {
+          "name": "name",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false

@@ -5,20 +5,7 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {
-			"MigrationsResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			}
-		},
+		"schemas": {},
 		"securitySchemes": {}
 	},
 	"info": {
@@ -37,7 +24,15 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MigrationsResponse"
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
 								}
 							}
 						}
@@ -93,6 +88,70 @@
 									],
 									"type": "object"
 								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/plans": {
+			"post": {
+				"operationId": "CreatePlan",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"get": {
+				"operationId": "GetPlans",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/products": {
+			"post": {
+				"operationId": "CreateProduct",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"get": {
+				"operationId": "GetProducts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
 							}
 						}
 					}

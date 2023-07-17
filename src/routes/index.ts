@@ -1,5 +1,7 @@
 import { Router } from "express";
 import migrationsRouter from "./migrations";
+import productsRouter from "./products";
+import plansRouter from "./plans";
 
 // import usersRouter from "./users/users.index";
 // import authRouter from "./auth/auth.index";
@@ -18,5 +20,7 @@ indexRoute.get("", (req, res) => {
 // indexRoute.use("/posts", postsRouter);
 
 indexRoute.use("/migrations", migrationsRouter);
+indexRoute.use("/products", productsRouter);
+indexRoute.use("/plans", plansRouter);
 
 export default indexRoute;

@@ -1,4 +1,8 @@
 {
-  "schema": "./src/models/schema.ts",
-  "out": "./src/drizzle"
+  "schema": "./src/models/schema/*",
+  "out": "./src/drizzle",
+  "driver": "pg",
+  "dbCredentials": {
+    "connectionString": "postgres://postgres:password@localhost:5432/express-project"
+  }
 }

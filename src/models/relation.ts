@@ -1,10 +1,3 @@
-import Payment from "./Payment";
-import Subscription from "./Subscription";
-import Plan from "./Plan";
-import User from "./User";
-import Product from "./Product";
-import ProductPlans from "./ProductPlans";
-
 export function linkTables() {
   // Subscription.hasMany(Payment, {
   //   foreignKey: "subscription_id",
@@ -38,13 +31,11 @@ export function linkTables() {
   //   through: "ProductPlans",
   //   as: "products",
   // });
-
-  ProductPlans.hasMany(Plan);
-  Plan.belongsTo(ProductPlans);
-
-  ProductPlans.hasMany(Product);
-  Product.belongsTo(ProductPlans);
-
-  Plan.belongsToMany(Product, { through: ProductPlans });
-  Product.belongsToMany(Plan, { through: ProductPlans });
+  //
+  // ProductPlans.hasMany(Plan);
+  // Plan.belongsTo(ProductPlans);
+  // ProductPlans.hasMany(Product);
+  // Product.belongsTo(ProductPlans);
+  // Plan.belongsToMany(Product, { through: ProductPlans });
+  // Product.belongsToMany(Plan, { through: ProductPlans });
 }
