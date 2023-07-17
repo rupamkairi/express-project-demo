@@ -11,4 +11,4 @@ $env:DB_NAME = "express-project"
 $env:DB_USER = "postgres"
 $env:DB_PASSWORD = "password"
 
-npm run dev
+npm start

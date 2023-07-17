@@ -12,6 +12,7 @@ import limiter from "./middlewares/rateLimiter";
 
 import swaggerUI from "swagger-ui-express";
 import swaggerDocument from "./swagger.json";
+import path from "path";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(
 
 // dbConnect();
 
+app.use(express.static(path.join(process.cwd(), "static")));
 app.use("/api", limiter, indexRouter);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 

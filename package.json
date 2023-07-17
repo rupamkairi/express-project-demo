@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "start:dev": "nodemon ./src/www.ts",
+    "predev": "npm run swagger",
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
     "build": "tsc",
     "start": "node ./dist/www",
     "test": "jest",
     "swagger": "tsoa spec",
-    "predev": "npm run swagger",
     "studio": "npx drizzle-kit studio --port 5500 --verbose"
   },
   "dependencies": {
